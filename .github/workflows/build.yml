@@ -2,12 +2,6 @@ name: Build
 
 on:
   workflow_dispatch:
-    inputs:
-      runner:
-        description: "Runner"
-        required: true
-        type: string
-        default: "self-hosted" # ubuntu-latest
 
 permissions:
   contents: write
