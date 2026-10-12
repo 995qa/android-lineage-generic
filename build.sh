@@ -18,27 +18,17 @@ chmod a+x bin/repo
 export PATH="$(realpath .)/bin:$PATH"
 cd android/lineage
 export PATH="$(realpath .)/prebuilts/sdk/tools/linux/bin/:$PATH"
-repo init -u https://github.com/LineageOS/android.git -b lineage-23.2 --git-lfs --no-clone-bundle --depth 1
+repo init -u https://github.com/LineageOS/android.git -b lineage-24.0 --git-lfs --no-clone-bundle --depth 1
 repo sync -c --prune --force-sync --retry-fetches=8 -j $(nproc)
 sed -i 's/-$(LINEAGE_BUILDTYPE)/-jqssun/g' vendor/lineage/config/version.mk
 
 source build/envsetup.sh
-export AB_OTA_UPDATER=false ROOMSERVICE_BRANCHES="lineage-23.1 lineage-23.0"
+export AB_OTA_UPDATER=false ROOMSERVICE_BRANCHES="lineage-24.0"
 
-breakfast virtio_x86_64 userdebug
-m recoveryimage
-mv out/target/product/virtio_x86_64/recovery.img ../../recovery_x86_64-userdebug.img
-
-breakfast virtio_x86_64 user
-m vm-utm-zip otapackage
-mv out/target/product/virtio_x86_64/boot.img ../../boot_x86_64.img
-mv out/target/product/virtio_x86_64/recovery.img ../../recovery_x86_64.img
-
-breakfast virtio_arm64only userdebug
-m recoveryimage
-mv out/target/product/virtio_arm64only/recovery.img ../../recovery_arm64only-userdebug.img
-
-breakfast virtio_arm64only user
-m vm-utm-zip otapackage
-mv out/target/product/virtio_arm64only/boot.img ../../boot_arm64only.img
-mv out/target/product/virtio_arm64only/recovery.img ../../recovery_arm64only.img
+breakfast Generic_x86_64 userdebug
+m liveisoimage
+echo ==============.img==============
+ls out/target/product/Generic_x86_64/*.img
+echo ==============.iso==============
+ls out/target/product/Generic_x86_64/*.iso
+mv out/target/product/Generic_x86_64/*-live.iso ../../bootcd_x86_64-userdebug.iso
