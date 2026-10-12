@@ -27,7 +27,7 @@ jobs:
   build:
     needs: check
     if: needs.check.outputs.build == 'true'
-    runs-on: ${{ github.event_name == 'workflow_dispatch' && inputs.runner || 'self-hosted' }}
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
 
